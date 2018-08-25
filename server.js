@@ -1,16 +1,22 @@
-var express = require ("express");
-var bodyParser = require ("body-parser");
-
+var express = require("express");
+var methodOverride = require("method-override");
 var app = express();
-var PORT = process.env.PORT || 8080;
+var bodyParser = require("body-parser");
+var mysql = require ("mysql");
+var port = process.env.PORT || 3000;
 
+app.use(express.static("public"));
 
-// app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(methodOverride('_method'));
 
-// app.use(express.static("app/public"));
+var exphbs = require("express-handlebars");
 
-// require("./app/routes/api-route.js")(app);
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
+app.set("view engine", "handlebars");
 
-app.listen(PORT, function(){
-    console.log("App is listening on PORT " + PORT);
-});
+var routes = require("./controllers/burgers_controller.js");
+
+app.use("/", routes);
+
+app.listen(port);	

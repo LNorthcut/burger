@@ -1,8 +1,9 @@
  create database burger_db;
  use burger_db;
  
- create table burger (
+ create table burgers (
  id int not null auto_increment primary key,
  burger_name varchar(100),
- devoured boolean
+ devoured boolean false,
+ date TIMESTAMP
  );
